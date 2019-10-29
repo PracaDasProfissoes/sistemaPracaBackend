@@ -1,14 +1,22 @@
 package br.edu.ufcg.pracadasprofissoes.usuarios;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import br.edu.ufcg.pracadasprofissoes.enums.Perfil;
 
 @Entity
 public class Usuario implements Serializable{
@@ -27,14 +35,19 @@ public class Usuario implements Serializable{
 	@NotNull
 	@NotEmpty
 	private String senha;
+	
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name="PERFIS")
+	private Set<Integer> perfis = new HashSet<>();
 
 	public Usuario() {
-		
+		addPerfil(Perfil.USUARIO);
 	}
 	
 	public Usuario(String email, String senha) {
 		this.email = email;
 		this.senha = senha;
+		addPerfil(Perfil.USUARIO);
 	}
 
 	public Long getId() {
@@ -59,5 +72,13 @@ public class Usuario implements Serializable{
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public Set<Perfil> getPerfis(){
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+	}
+	
+	public void addPerfil(Perfil perfil) {
+		perfis.add(perfil.getCod());
 	}
 }
