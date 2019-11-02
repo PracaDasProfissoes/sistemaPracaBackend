@@ -21,6 +21,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import br.edu.ufcg.pracadasprofissoes.security.JWTAuthenticationFilter;
 import br.edu.ufcg.pracadasprofissoes.security.JWTAuthorizationFilter;
 import br.edu.ufcg.pracadasprofissoes.security.JWTUtil;
+import br.edu.ufcg.pracadasprofissoes.util.RestConstants;
 
 @Configuration
 @EnableWebSecurity
@@ -39,12 +40,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
-		if (Arrays.asList(environment.getActiveProfiles()).contains("test")) {
-            http.headers().frameOptions().disable();
-        }
+//		if (Arrays.asList(environment.getActiveProfiles()).contains("test")) {
+//            http.headers().frameOptions().disable();
+//        }
+		http.headers().frameOptions().disable();
 		http.cors().and().csrf().disable();
 		http.authorizeRequests()
-			.antMatchers(HttpMethod.POST).permitAll()
+			.antMatchers(HttpMethod.POST, RestConstants.ESCOLA_URI).permitAll()
 			.antMatchers(h2).permitAll()
 			.anyRequest().authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
@@ -54,19 +56,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService).passwordEncoder(bCriptPasswordEncoder());
+		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 	}
 	
 	@Bean
-	CorsConfigurationSource corsConfigurationSurce() {
+	CorsConfigurationSource corsConfigurationSource() {
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		CorsConfiguration cors = new CorsConfiguration().applyPermitDefaultValues();
+		cors.addAllowedOrigin("*");
 		source.registerCorsConfiguration("/**", cors);
 		return source;
 	}
 	
 	@Bean
-	public BCryptPasswordEncoder bCriptPasswordEncoder() {
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 }
