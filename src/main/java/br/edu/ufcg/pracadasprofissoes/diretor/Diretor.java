@@ -28,29 +28,13 @@ public class Diretor implements Serializable{
 	@Column(unique=true)
 	private String cpf;
 	
-	@NotNull
-	@NotEmpty
-	@Column(unique=true)
-	private String rg;
-	
-	@NotNull
-	@NotEmpty
-	private String telefone;
-	
-	@NotNull
-	@NotEmpty
-	private Endereco endereco;
-	
 	public Diretor() {
 		
 	}
 	
-	public Diretor(String nome, String cpf, String rg, String telefone, Endereco endereco) {
+	public Diretor(String nome, String cpf) {
 		this.nome = nome;
 		this.cpf = cpf;
-		this.rg = rg;
-		this.telefone = telefone;
-		this.endereco = endereco;
 	}
 
 	public Long getId() {
@@ -75,29 +59,5 @@ public class Diretor implements Serializable{
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
-	}
-
-	public String getRg() {
-		return rg;
-	}
-
-	public void setRg(String rg) {
-		this.rg = rg;
-	}
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
-	public Endereco getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
 	}
 }

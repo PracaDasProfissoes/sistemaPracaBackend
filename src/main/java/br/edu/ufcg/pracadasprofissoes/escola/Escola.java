@@ -33,6 +33,8 @@ public class Escola implements Serializable{
 	
 	private String diretor;
 	
+	private Endereco endereco;
+	
 	@OneToOne
 	private Usuario usuario;
 	
@@ -40,13 +42,14 @@ public class Escola implements Serializable{
 		
 	}
 	
-	public Escola(String nome, String sigla, String cnpj, String telefone, String diretor, Usuario usuario) {
+	public Escola(String nome, String sigla, String cnpj, String telefone, String diretor, Usuario usuario, Endereco endereco) {
 		this.nome = nome;
 		this.sigla = sigla;
 		this.cnpj = cnpj;
 		this.telefone = telefone;
 		this.diretor = diretor;
 		this.usuario = usuario;
+		this.endereco = endereco;
 	}
 
 	public Long getId() {

@@ -1,4 +1,4 @@
-package br.edu.ufcg.pracadasprofissoes.diretor;
+package br.edu.ufcg.pracadasprofissoes.escola;
 
 import java.io.Serializable;
 
@@ -42,6 +42,15 @@ public class Endereco implements Serializable{
 	@NotEmpty
 	private String cep;
 
+	public Endereco(String rua, String numero, String bairro, String cidade, String estado, String cep) {
+		this.rua = rua;
+		this.numero = numero;
+		this.bairro = bairro;
+		this.cidade = cidade;
+		this.estado = estado;
+		this.cep = cep;
+	}
+	
 	public Long getId() {
 		return id;
 	}
