@@ -1,6 +1,6 @@
 FROM maven:3.5-jdk-8-alpine
 WORKDIR /app
-COPY . /app
+COPY --from=0 . /app
 RUN mvn install
 
 FROM openjdk:8-jre-alpine
