@@ -1,5 +1,6 @@
 package br.edu.ufcg.pracadasprofissoes.escola;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -37,7 +38,9 @@ public class EscolaController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getUsuario(@PathVariable("id") long idEscola){
-		Escola escola = escolaService.buscarEscola(idEscola);
-		return ResponseEntity.ok().body(escola);
+//		Escola escola = escolaService.buscarEscola(idEscola);
+//		Map<String, String> escolaResponse = new HashMap<>();
+//		escolaResponse.put("nome", escola.getNome());
+		return ResponseEntity.ok().body("ok");
 	}
 }

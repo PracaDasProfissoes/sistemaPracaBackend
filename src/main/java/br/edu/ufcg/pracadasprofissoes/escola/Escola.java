@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import br.edu.ufcg.pracadasprofissoes.diretor.Diretor;
 import br.edu.ufcg.pracadasprofissoes.usuarios.Usuario;
 
 @Entity
@@ -31,8 +32,10 @@ public class Escola implements Serializable{
 
 	private String telefone;
 	
-	private String diretor;
+	@OneToOne
+	private Diretor diretor;
 	
+	@OneToOne
 	private Endereco endereco;
 	
 	@OneToOne
@@ -42,7 +45,7 @@ public class Escola implements Serializable{
 		
 	}
 	
-	public Escola(String nome, String sigla, String cnpj, String telefone, String diretor, Usuario usuario, Endereco endereco) {
+	public Escola(String nome, String sigla, String cnpj, String telefone, Diretor diretor, Usuario usuario, Endereco endereco) {
 		this.nome = nome;
 		this.sigla = sigla;
 		this.cnpj = cnpj;
@@ -92,11 +95,11 @@ public class Escola implements Serializable{
 		this.telefone = telefone;
 	}
 
-	public String getDiretor() {
+	public Diretor getDiretor() {
 		return diretor;
 	}
 
-	public void setDiretor(String diretor) {
+	public void setDiretor(Diretor diretor) {
 		this.diretor = diretor;
 	}
 
