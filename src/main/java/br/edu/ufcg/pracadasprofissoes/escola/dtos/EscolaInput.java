@@ -6,10 +6,7 @@ import br.edu.ufcg.pracadasprofissoes.diretor.Diretor;
 import br.edu.ufcg.pracadasprofissoes.escola.Endereco;
 import br.edu.ufcg.pracadasprofissoes.usuarios.Usuario;
 
-public class EscolaOutput {
-
-	@NotEmpty
-	private Long id;
+public class EscolaInput {
 	
 	@NotEmpty
 	private String nome;
@@ -23,19 +20,28 @@ public class EscolaOutput {
 	@NotEmpty
 	private String telefone;
 	
-	@NotEmpty
 	private Diretor diretor;
 	
-	@NotEmpty
 	private Endereco endereco;
+	
+	private Usuario usuario;
+	
+	public EscolaInput() {
+	}
+	
 
-	public Long getId() {
-		return id;
+	public EscolaInput( String nome, String sigla, String cnpj, String telefone,
+			 Diretor diretor, Endereco endereco, Usuario usuario) {
+		super();
+		this.nome = nome;
+		this.sigla = sigla;
+		this.cnpj = cnpj;
+		this.telefone = telefone;
+		this.diretor = diretor;
+		this.endereco = endereco;
+		this.usuario = usuario;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getNome() {
 		return nome;
@@ -84,7 +90,15 @@ public class EscolaOutput {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 	
 	
-	
+
 }

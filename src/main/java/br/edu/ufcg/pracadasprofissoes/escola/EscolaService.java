@@ -25,19 +25,29 @@ public class EscolaService {
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 
-	public Escola criarEscola(Map<String, String> escola) {
-		Usuario usuario = usuarioService.criarUsuario(escola.get("email"), escola.get("senha"));
-		Endereco endereco = new Endereco(escola.get("rua"), escola.get("numero"), escola.get("bairro"), escola.get("cidade"), escola.get("estado"), escola.get("cep"));
-		enderecoRepository.save(endereco);
-		Diretor diretor = new Diretor(escola.get("diretor"), escola.get("cpf"));
-		diretorRepository.save(diretor);
-		Escola newEscola = new Escola(escola.get("nome"), escola.get("sigla"), escola.get("cnpj"), escola.get("telefone"), diretor, usuario, endereco);
+	public Escola criarEscola(Escola escola) {
+		Usuario usuario = usuarioService.criarUsuario(escola.getUsuario());
+		Endereco endereco = enderecoRepository.save(escola.getEndereco());
+		Diretor diretor = diretorRepository.save(escola.getDiretor());
+		Escola newEscola = new Escola();
+		newEscola.setNome(escola.getNome());
+		newEscola.setSigla(escola.getSigla());
+		newEscola.setCnpj(escola.getCnpj());
+		newEscola.setTelefone(escola.getTelefone());
+		newEscola.setDiretor(diretor);
+		newEscola.setEndereco(endereco);
+		newEscola.setUsuario(usuario);
 		escolaRepository.save(newEscola);
 		return newEscola;
 	}
 	
 	public Escola buscarEscola(Long idEscola) {
 		Escola escola = escolaRepository.findById(idEscola).get();
+		return escola;
+	}
+	
+	public Escola buscaEscolaPorUsuario(Long idUsuario) {
+		Escola escola = escolaRepository.findByUsuarioId(idUsuario);
 		return escola;
 	}
 }

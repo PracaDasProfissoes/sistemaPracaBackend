@@ -29,7 +29,6 @@ public class Diretor implements Serializable{
 	private String cpf;
 	
 	public Diretor() {
-		
 	}
 	
 	public Diretor(String nome, String cpf) {

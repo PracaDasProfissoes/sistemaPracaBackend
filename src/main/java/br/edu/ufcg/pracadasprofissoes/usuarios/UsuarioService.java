@@ -13,6 +13,10 @@ public class UsuarioService {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
+	public Usuario criarUsuario(Usuario usuario) {
+		return this.criarUsuario(usuario.getEmail(), usuario.getSenha());
+	}
+	
 	public Usuario criarUsuario(String email, String senha) {
 		Usuario newUsuario = new Usuario(email, passwordEncoder.encode(senha));
 		usuarioRepository.save(newUsuario);

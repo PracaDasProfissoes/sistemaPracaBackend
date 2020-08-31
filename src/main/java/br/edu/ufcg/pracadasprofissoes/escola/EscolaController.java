@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.ufcg.pracadasprofissoes.escola.dtos.*;
 import br.edu.ufcg.pracadasprofissoes.util.RestConstants;
 
 @RestController
@@ -26,21 +27,27 @@ public class EscolaController {
 	@Autowired
 	private EscolaService escolaService;
 	
+	@Autowired
+	private EscolaIO escolaIO;
+	
 	@PostMapping({"/", ""})
-	public ResponseEntity<?> cadastrarEscola(@Valid @RequestBody Map<String, String> escola, BindingResult result){
+	public ResponseEntity<?> cadastrarEscola(@Valid @RequestBody EscolaInput escolaInput, BindingResult result){
 		if(result.hasErrors()) {
 			return ResponseEntity.badRequest().body("Dados Invalidos");
 		}
+		
+		Escola escola = escolaIO.mapTo(escolaInput);
 		Escola newEscola = escolaService.criarEscola(escola);
-		HttpHeaders responseHeaders = new HttpHeaders();
-		return new ResponseEntity<>(newEscola, responseHeaders, HttpStatus.CREATED);
+		EscolaOutput escolaOutput = escolaIO.mapTo(newEscola);
+		return new ResponseEntity<>(escolaOutput, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getUsuario(@PathVariable("id") long idEscola){
-//		Escola escola = escolaService.buscarEscola(idEscola);
+	public ResponseEntity<?> getEscola(@PathVariable("id") long idUsuario){
+		Escola escola = escolaService.buscaEscolaPorUsuario(idUsuario);
 //		Map<String, String> escolaResponse = new HashMap<>();
 //		escolaResponse.put("nome", escola.getNome());
-		return ResponseEntity.ok().body("ok");
+		return ResponseEntity.ok(escola);
+		
 	}
 }
