@@ -48,6 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.authorizeRequests()
 			.antMatchers(HttpMethod.POST, RestConstants.ESCOLA_URI).permitAll()
 			.antMatchers(HttpMethod.POST, RestConstants.USUARIO_URI).permitAll()
+			.antMatchers(HttpMethod.GET, RestConstants.ESTADO_URI).permitAll()
+			.antMatchers(HttpMethod.GET, RestConstants.CIDADE_URI+"/**").permitAll()
 			.antMatchers(h2).permitAll()
 			.anyRequest().authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
