@@ -7,5 +7,7 @@ import br.edu.ufcg.pracadasprofissoes.locais.models.Estado;
 
 @Repository
 public interface EstadoRepository extends JpaRepository<Estado, Long>{
+	
+	Estado findByCod(long cod);
 
 }

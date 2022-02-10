@@ -21,6 +21,18 @@ public enum Perfil {
 		return descricao;
 	}
 	
+	public static String getPerfil(Integer cod) {
+		if (cod == null) {
+			return null;
+		}
+		for (Perfil x: Perfil.values()) {
+			if (cod.equals(x.getCod())) {
+				return x.getDescricao();
+			}
+		}
+		throw new IllegalArgumentException("Id inválido: " + cod);
+	}
+	
 	public static Perfil toEnum(Integer cod) {
 		if (cod == null) {
 			return null;

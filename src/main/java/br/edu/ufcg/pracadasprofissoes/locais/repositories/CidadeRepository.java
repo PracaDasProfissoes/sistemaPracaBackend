@@ -12,6 +12,6 @@ import br.edu.ufcg.pracadasprofissoes.locais.models.Estado;
 @Repository
 public interface CidadeRepository extends JpaRepository<Cidade, Long>{
 	
-	List<Cidade> findByEstadoCod(Long estado);
+	List<Cidade> findByEstadoCod(long estado);
 
 }

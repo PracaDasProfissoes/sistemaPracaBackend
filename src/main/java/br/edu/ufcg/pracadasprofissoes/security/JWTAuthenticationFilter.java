@@ -20,6 +20,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.edu.ufcg.pracadasprofissoes.dto.CredenciaisDTO;
 
+import br.edu.ufcg.pracadasprofissoes.util.RestConstants;
+
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 	
 	private AuthenticationManager authenticationManager;
@@ -49,8 +51,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, Authentication authentication) throws IOException, ServletException{
 		String username = ((UsuarioSpringSecurity) authentication.getPrincipal()).getUsername();
         String token = jwtUtil.generateToken(username);
-        response.addHeader("Access-Control-Expose-Headers", "Authorization");
-        response.addHeader("Authorization", "Bearer " + token);
+        response.addHeader(RestConstants.TOKEN_HEADER2, RestConstants.TOKEN_HEADER);
+        response.addHeader(RestConstants.TOKEN_HEADER, RestConstants.TOKEN_PREFIX + " " + token);
 	}
 	
 	private class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {

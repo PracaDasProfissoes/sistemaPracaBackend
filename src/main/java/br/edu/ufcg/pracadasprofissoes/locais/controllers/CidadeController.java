@@ -24,9 +24,9 @@ public class CidadeController {
 	@Autowired
 	private EstadoService estadoService;
 	
-	@GetMapping({"/{id}"})
-	public List<Cidade> getCidades(@PathVariable("id") Long idEstado){
-		return this.cidadeService.getCidadesByEstado(idEstado);
+	@GetMapping({"/{estado_cod}"})
+	public List<Cidade> getCidades(@PathVariable("estado_cod") long estadoCod){
+		return this.cidadeService.getCidadesByEstado(estadoCod);
 	}
 	
 }

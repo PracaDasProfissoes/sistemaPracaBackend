@@ -1,7 +1,5 @@
 package br.edu.ufcg.pracadasprofissoes.config;
 
-import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,6 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	private static final String h2 = "/h2-console/**";
 	
+	private static final String swagger = "/swagger-ui/**";
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 //		if (Arrays.asList(environment.getActiveProfiles()).contains("test")) {
@@ -48,13 +48,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.authorizeRequests()
 			.antMatchers(HttpMethod.POST, RestConstants.ESCOLA_URI).permitAll()
 			.antMatchers(HttpMethod.POST, RestConstants.USUARIO_URI).permitAll()
-			.antMatchers(HttpMethod.GET, RestConstants.ESTADO_URI).permitAll()
+			.antMatchers(HttpMethod.POST, RestConstants.API_URI+"/usuario/login").permitAll()
+			.antMatchers(HttpMethod.GET, RestConstants.ESTADO_URI+"/**").permitAll()
 			.antMatchers(HttpMethod.GET, RestConstants.CIDADE_URI+"/**").permitAll()
+			.antMatchers("/swagger-ui/#/**").permitAll()
+			.antMatchers("/v2/api-docs/**").permitAll()
+			.antMatchers("/swagger-resources/**").permitAll()
+			.antMatchers("swagger-ui.html").permitAll()
+			.antMatchers("webjars/**").permitAll()
+			.antMatchers(swagger).permitAll()
 			.antMatchers(h2).permitAll()
 			.anyRequest().authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
 		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.httpBasic().disable();
 	}
 	
 	@Override
@@ -75,4 +83,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	
 }

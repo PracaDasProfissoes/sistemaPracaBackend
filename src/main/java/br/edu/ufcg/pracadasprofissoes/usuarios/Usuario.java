@@ -16,6 +16,9 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import br.edu.ufcg.pracadasprofissoes.enums.Perfil;
 
 @Entity
@@ -80,5 +83,13 @@ public class Usuario implements Serializable{
 	
 	public void addPerfil(Perfil perfil) {
 		perfis.add(perfil.getCod());
+	}
+	
+	public String getPerfisString() throws JsonProcessingException {
+		Payload payload = new Payload();
+		payload.setEmail(this.email);
+		payload.setPerfil(perfis.stream().map(x -> Perfil.getPerfil(x)).collect(Collectors.toList()));
+		String retorno = new ObjectMapper().writeValueAsString(payload);
+		return retorno;
 	}
 }

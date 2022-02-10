@@ -1,6 +1,7 @@
 package br.edu.ufcg.pracadasprofissoes.security;
 
 import java.util.Date;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -18,9 +19,9 @@ public class JWTUtil {
 	@Value("${jwt.expiration}")
 	private Long expiration;
 	
-	public String generateToken(String username) {
+	public String generateToken(String dados) {
 		return Jwts.builder()
-			   .setSubject(username)
+			   .setSubject(dados)
 			   .setExpiration(new Date(System.currentTimeMillis() + expiration))
 			   .signWith(SignatureAlgorithm.HS512, secret.getBytes())
 			   .compact();

@@ -30,7 +30,7 @@ public class EscolaController {
 	@Autowired
 	private EscolaIO escolaIO;
 	
-	@PostMapping({"/", ""})
+	@PostMapping("/")
 	public ResponseEntity<?> cadastrarEscola(@Valid @RequestBody EscolaInput escolaInput, BindingResult result){
 		if(result.hasErrors()) {
 			return ResponseEntity.badRequest().body("Dados Invalidos");
@@ -42,8 +42,8 @@ public class EscolaController {
 		return new ResponseEntity<>(escolaOutput, HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/{id}")
-	public ResponseEntity<?> getEscola(@PathVariable("id") long idUsuario){
+	@GetMapping("/{usuario_id}")
+	public ResponseEntity<?> getEscola(@PathVariable("usuario_id") long idUsuario){
 		Escola escola = escolaService.buscaEscolaPorUsuario(idUsuario);
 //		Map<String, String> escolaResponse = new HashMap<>();
 //		escolaResponse.put("nome", escola.getNome());

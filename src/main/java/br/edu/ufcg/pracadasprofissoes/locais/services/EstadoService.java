@@ -19,7 +19,7 @@ public class EstadoService {
 		return estadoRepository.findAll();
 	}
 	
-	public Estado getEstado(Long id) {
-		return estadoRepository.findById(id).get();
+	public Estado getEstado(long cod) {
+		return estadoRepository.findByCod(cod);
 	}
 }
